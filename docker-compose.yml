@@ -1,0 +1,23 @@
+version: '2'  
+services:
+
+  livingcost-db:
+    image: 'mongo:latest'
+    container_name: 'livingcost-db'
+    command: mongod --port 27018
+    ports:
+      - '27018:27018'
+    environment:
+      - MONGO_URI=127.0.0.1:27018
+    network_mode: "host"
+
+
+  livingcost-ms:
+    container_name: 'livingcost-ms'
+    build: .
+    ports:
+      - '4001:4001'
+
+    depends_on:
+    - 'livingcost-db'
+    network_mode: "host"
